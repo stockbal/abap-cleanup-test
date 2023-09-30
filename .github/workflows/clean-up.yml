@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  Code-Cleanup:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -34,7 +34,13 @@ jobs:
           cd ..
 
       - name: Clean-up files in /src
-        run: |
-          ./.cleanup/abapcleaner/abap-cleaner --sourcefile src/zcl_abap_class.clas.abap --targetfile src/zcl_abap_class.clas.abap --overwrite
-          git status
+        run: ./.cleanup/abapcleaner/abap-cleaner --sourcefile src/zcl_abap_class.clas.abap --targetfile src/zcl_abap_class.clas.abap --overwrite
 
+      # Commit the changes
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: Ludwig Stockbauer-Muhr
+          author_email: stocki87@gmail.com
+          message: "style: code cleanup with ABAP cleaner"
+          add: "src"
