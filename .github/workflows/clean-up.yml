@@ -28,8 +28,8 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          mdkir /tmp
-          cd /tmp
+          mkdir tmp
+          cd tmp
           wget -q -c https://github.com/SAP/abap-cleaner/releases/download/v1.5.5/com.sap.adt.abapcleaner.app-linux.gtk.x86_64.tar.gz -O - | tar -xz
           cd ..
           ./tmp/abapcleaner/abap-cleaner --sourcefile src/zcl_abap_class.clas.abap
