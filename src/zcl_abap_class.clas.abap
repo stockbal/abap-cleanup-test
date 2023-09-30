@@ -19,7 +19,8 @@ CLASS zcl_sat_adt_res_cds_ext_vh IMPLEMENTATION.
     DATA lt_extend_range TYPE RANGE OF ddddlsrc-parentname.
 
     IF p_filter_name IS NOT INITIAL.
-      lt_extend_range = VALUE #( ( sign = 'I' option = 'CP' low = to_upper( p_filter_name ) ) ).
+      lt_extend_range = VALUE #( 
+        ( sign = 'I' option = 'CP' low = to_upper( p_filter_name ) ) ).
     ENDIF.
 
     SELECT
