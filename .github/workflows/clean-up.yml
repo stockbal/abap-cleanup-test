@@ -5,17 +5,17 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
-  #push:
-  #  branches: ["main"]
-  pull_request:
-    branches: ["main"]
+  push:
+   branches: ["main"]
+  # pull_request:
+  #   branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  # Contains a Code Cleanup Job with ABAP Cleaner and triggers auto commit
   Code-Cleanup:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
           cd ..
 
       - name: Clean-up files in /src
-        run: ./.cleanup/abapcleaner/abap-cleaner --sourcefile src/zcl_abap_class.clas.abap --targetfile src/zcl_abap_class.clas.abap --overwrite
+        run: ./.cleanup/abapcleaner/abap-cleaner --sourcefile src/zcl_abap_class.clas.abap --targetfile src/zcl_abap_class.clas.abap --overwrite --profile ${{ github.workspace }}/cleaner-profile.cfj --release 750
 
       # Commit the changes
       - name: Commit changes
