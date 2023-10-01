@@ -16,7 +16,6 @@ ENDCLASS.
 
 CLASS zcl_sat_adt_res_cds_ext_vh IMPLEMENTATION.
   METHOD get_named_items.
-
     DATA lt_extend_range TYPE RANGE OF ddddlsrc-parentname.
 
     IF p_filter_name IS NOT INITIAL.
@@ -33,9 +32,9 @@ CLASS zcl_sat_adt_res_cds_ext_vh IMPLEMENTATION.
     INTO CORRESPONDING FIELDS OF TABLE @p_named_item_list-items
       UP TO @p_filter_max_item_count ROWS.
 
-    p_filter_already_applied = 
+    p_filter_already_applied =
           abap_true.
-    p_named_item_list-total_item_count = 
+    p_named_item_list-total_item_count =
           lines( p_named_item_list-items ).
   ENDMETHOD.
 ENDCLASS.
