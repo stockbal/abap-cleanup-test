@@ -42,5 +42,6 @@ jobs:
         with:
           #author_name: Ludwig Stockbauer-Muhr
           #author_email: stocki87@gmail.com
+          default_author: github_actions
           message: "style: code cleanup with ABAP cleaner"
           add: "src"
