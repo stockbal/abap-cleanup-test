@@ -19,7 +19,8 @@ CLASS zcl_sat_adt_res_cds_ext_vh IMPLEMENTATION.
     DATA lt_extend_range TYPE RANGE OF ddddlsrc-parentname.
 
     IF p_filter_name IS NOT INITIAL.
-      lt_extend_range = VALUE #( ( sign = 'I' option = 'CP' low = to_upper( p_filter_name ) ) ).
+      lt_extend_range = VALUE #( 
+( sign = 'I' option = 'CP' low = to_upper( p_filter_name ) ) ).
     ENDIF.
 
     SELECT
@@ -32,7 +33,8 @@ CLASS zcl_sat_adt_res_cds_ext_vh IMPLEMENTATION.
     INTO CORRESPONDING FIELDS OF TABLE @p_named_item_list-items
       UP TO @p_filter_max_item_count ROWS.
 
-    p_filter_already_applied = abap_true.
+    p_filter_already_applied       
+= abap_true.
     p_named_item_list-total_item_count = lines( p_named_item_list-items ).
   ENDMETHOD.
 ENDCLASS.
