@@ -19,7 +19,6 @@ CLASS zcl_dummy_uri_to_src_mapper IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD zif_dummy_uri_to_src_mapper~map_adt_uri_to_src.
-
     DATA(uri_mapper) = lcl_uri_mapper_factory=>get_uri_mapper( uri ).
     IF uri_mapper IS INITIAL.
       RAISE EXCEPTION TYPE zcx_dummy_exception

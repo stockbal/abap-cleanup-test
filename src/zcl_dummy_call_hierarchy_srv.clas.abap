@@ -229,8 +229,7 @@ CLASS zcl_dummy_call_hierarchy_srv IMPLEMENTATION.
       abap_element_info-legacy_type           = swbm_c_type_cls_mtd_impl.
 
       abap_element_info-encl_obj_display_name = first_ref_entry-name.
-      abap_element_info-encl_object_name      = first_ref_entry-name
-             .
+      abap_element_info-encl_object_name      = first_ref_entry-name.
     ELSEIF first_ref_entry-tag = cl_abap_compiler=>tag_program.
       abap_element_info-encl_object_name = first_ref_entry-name.
 

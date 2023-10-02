@@ -47,8 +47,7 @@ CLASS zcl_dummy_abap_element_fac IMPLEMENTATION.
       elem_info-legacy_type           = swbm_c_type_cls_mtd_impl.
 
       elem_info-encl_obj_display_name = first_ref_entry-name.
-      elem_info-encl_object_name      = first_ref_entry-name
-             .
+      elem_info-encl_object_name      = first_ref_entry-name.
     ELSEIF first_ref_entry-tag = cl_abap_compiler=>tag_program.
       elem_info-encl_object_name = first_ref_entry-name.
 

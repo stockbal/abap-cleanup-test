@@ -103,8 +103,7 @@ CLASS ltcl_unit IMPLEMENTATION.
 
   METHOD normal_method_fullname.
     exp_fullname = '\TY:ZCL_DUMMY_TEST1\ME:TEST1'.
-    full_name_input = '\TY:ZCL_DUMMY_TEST1\ME:TEST1'
-      .
+    full_name_input = '\TY:ZCL_DUMMY_TEST1\ME:TEST1'.
     main_prog_input = cl_oo_classname_service=>get_classpool_name( 'ZCL_DUMMY_TEST1' ).
 
     exp_object_name = 'TEST1'.
@@ -134,8 +133,7 @@ CLASS ltcl_unit IMPLEMENTATION.
 
   METHOD intf_method_impl_fullname.
     exp_fullname = '\TY:ZCL_DUMMY_TEST1\IN:ZIF_DUMMY_TEST1\ME:RUN'.
-    full_name_input = '\TY:ZCL_DUMMY_TEST1\IN:ZIF_DUMMY_TEST1\ME:RUN'
-      .
+    full_name_input = '\TY:ZCL_DUMMY_TEST1\IN:ZIF_DUMMY_TEST1\ME:RUN'.
 
     main_prog_input = cl_oo_classname_service=>get_classpool_name( 'ZCL_DUMMY_TEST1' ).
 
