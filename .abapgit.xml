@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+ <asx:values>
+  <DATA>
+   <MASTER_LANGUAGE>E</MASTER_LANGUAGE>
+   <STARTING_FOLDER>/src/</STARTING_FOLDER>
+   <FOLDER_LOGIC>PREFIX</FOLDER_LOGIC>
+   <IGNORE>
+    <item>/.gitignore</item>
+    <item>/README.md</item>
+    <item>/.github</item>
+    <item>*.cfj</item>
+    <item>/src/*.ddls.baseinfo</item>
+   </IGNORE>
+   <REQUIREMENTS>
+    <item>
+     <COMPONENT>SAP_BASIS</COMPONENT>
+     <MIN_RELEASE>740</MIN_RELEASE>
+    </item>
+   </REQUIREMENTS>
+  </DATA>
+ </asx:values>
+</asx:abap>
