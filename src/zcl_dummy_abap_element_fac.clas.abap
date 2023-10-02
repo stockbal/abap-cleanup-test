@@ -18,9 +18,9 @@ CLASS zcl_dummy_abap_element_fac DEFINITION
     METHODS constructor.
 
     METHODS get_adt_type
-             IMPORTING
+      IMPORTING
         element_data  TYPE zif_dummy_ty_global=>ty_abap_element
-                  RETURNING
+      RETURNING
         VALUE(result) TYPE string.
 
     METHODS fill_missing_information
@@ -40,7 +40,7 @@ CLASS zcl_dummy_abap_element_fac IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-                    DATA(first_ref_entry) = ref_stack[ 1 ].
+    DATA(first_ref_entry) = ref_stack[ 1 ].
     DATA(second_ref_entry) = VALUE #( ref_stack[ 2 ] OPTIONAL ).
 
     IF first_ref_entry-tag = cl_abap_compiler=>tag_type.
@@ -56,13 +56,13 @@ CLASS zcl_dummy_abap_element_fac IMPLEMENTATION.
 
         DATA(encl_class) = translate( val = CONV seoclsname( first_ref_entry-name ) from = '=' to = '' ).
         elem_info-encl_obj_display_name = |{ encl_class }=>{ second_ref_entry-name }|.
-                      ELSE.
+      ELSE.
         elem_info-legacy_type           = swbm_c_type_prg_subroutine.
         elem_info-encl_obj_display_name = elem_info-encl_object_name.
       ENDIF.
     ELSEIF first_ref_entry-tag = cl_abap_compiler=>tag_form.
       elem_info-legacy_type = swbm_c_type_prg_subroutine.
-                    ELSEIF first_ref_entry-tag = cl_abap_compiler=>tag_function.
+    ELSEIF first_ref_entry-tag = cl_abap_compiler=>tag_function.
       elem_info-legacy_type = swbm_c_type_function.
     ENDIF.
 
@@ -72,7 +72,6 @@ CLASS zcl_dummy_abap_element_fac IMPLEMENTATION.
       elem_info-object_name = object_name_parts[ 2 ].
     ENDIF.
   ENDMETHOD.
-
 
   METHOD get_adt_type.
     DATA tadir_type TYPE trobjtype.

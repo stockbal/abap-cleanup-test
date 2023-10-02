@@ -93,10 +93,10 @@ CLASS lcl_fugr_uri_mapper IMPLEMENTATION.
 
   METHOD lif_uri_mapper~map.
     FIND REGEX c_fugr_uri_regex IN uri
-                                RESULTS DATA(match).
+         RESULTS DATA(match).
 
     IF match IS INITIAL.
-                                      RETURN.
+      RETURN.
     ENDIF.
 
     DATA(fugrname_group) = match-submatches[ 1 ].
@@ -110,9 +110,9 @@ CLASS lcl_fugr_uri_mapper IMPLEMENTATION.
     result-uri       = uri.
     result-trobjtype = zif_dummy_c_tadir_type=>function_group.
 
-    DATA(group) = cl_http_utility=>unescape_url(            to_upper( uri+fugrname_group-offset(fugrname_group-length) ) ).
+    DATA(group) = cl_http_utility=>unescape_url( to_upper( uri+fugrname_group-offset(fugrname_group-length) ) ).
     result-main_prog = zcl_dummy_func_util=>get_progname_for_group( CONV #( group ) ).
-    result-include   = cl_http_utility=>unescape_url( to_upper(           uri+sub_name_group-offset(sub_name_group-length) ) ).
+    result-include   = cl_http_utility=>unescape_url( to_upper( uri+sub_name_group-offset(sub_name_group-length) ) ).
 
     DATA(type_name) = uri+type_group-offset(type_group-length).
     IF type_name = 'fmodules'.
@@ -129,7 +129,7 @@ CLASS lcl_prog_uri_mapper IMPLEMENTATION.
 
   METHOD lif_uri_mapper~map.
     FIND REGEX c_prog_uri_regex IN uri
-                     RESULTS DATA(match).
+         RESULTS DATA(match).
 
     IF match IS INITIAL.
       RETURN.
@@ -144,7 +144,7 @@ CLASS lcl_prog_uri_mapper IMPLEMENTATION.
 
     result-uri       = uri.
     result-trobjtype = zif_dummy_c_tadir_type=>program.
-    result-include   = cl_http_utility=>unescape_url( to_upper(              uri+name_group-offset(name_group-length) ) ).
+    result-include   = cl_http_utility=>unescape_url( to_upper( uri+name_group-offset(name_group-length) ) ).
     result-main_prog = result-include.
 
     DATA(type_name) = uri+type_group-offset(type_group-length).
