@@ -18,11 +18,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Download ABAP Cleaner v1.6.0
+      - name: Download ABAP Cleaner (latest version)
         run: |
           mkdir .cleanup
           cd .cleanup
-          wget -q -c https://github.com/SAP/abap-cleaner/releases/download/v1.6.0/com.sap.adt.abapcleaner.app-linux.gtk.x86_64.tar.gz -O - | tar -xz
+          wget -q -c https://github.com/SAP/abap-cleaner/releases/latest/download/com.sap.adt.abapcleaner.app-linux.gtk.x86_64.tar.gz -O - | tar -xz
           cd ..
 
       - name: Clean-up files in /src
