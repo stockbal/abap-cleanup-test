@@ -3,9 +3,8 @@
 *"* declarations
 
 CLASS lcl_local IMPLEMENTATION.
-
   METHOD zif_dummy_test1~run.
-    DATA: intf_ref TYPE REF TO if_adt_rest_authorization.
+    DATA intf_ref TYPE REF TO if_adt_rest_authorization.
 
     TRY.
         intf_ref->check_authority( '/sap/uri' ).
@@ -14,7 +13,5 @@ CLASS lcl_local IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD local_private.
-
   ENDMETHOD.
-
 ENDCLASS.

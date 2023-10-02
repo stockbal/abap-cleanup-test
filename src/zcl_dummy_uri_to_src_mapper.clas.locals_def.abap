@@ -9,6 +9,7 @@ INTERFACE lif_uri_mapper.
       zcx_dummy_exception.
 ENDINTERFACE.
 
+
 CLASS lcl_uri_mapper_factory DEFINITION CREATE PRIVATE.
 
   PUBLIC SECTION.
@@ -17,24 +18,23 @@ CLASS lcl_uri_mapper_factory DEFINITION CREATE PRIVATE.
         uri           TYPE string
       RETURNING
         VALUE(result) TYPE REF TO lif_uri_mapper.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS lcl_class_uri_mapper DEFINITION.
 
   PUBLIC SECTION.
     INTERFACES lif_uri_mapper.
+
     METHODS constructor
       IMPORTING
         uri TYPE string.
-  PROTECTED SECTION.
+
   PRIVATE SECTION.
     DATA uri TYPE string.
-    CONSTANTS:
-      c_class_uri_regex TYPE string VALUE `^/sap/bc/adt/oo/classes/([\w%]+)/(source/main|includes)/?(definitions|implementations|testclasses)?`.
+
+    CONSTANTS c_class_uri_regex TYPE string
+              VALUE `^/sap/bc/adt/oo/classes/([\w%]+)/(source/main|includes)/?(definitions|implementations|testclasses)?`.
 ENDCLASS.
 
 
@@ -42,14 +42,16 @@ CLASS lcl_fugr_uri_mapper DEFINITION.
 
   PUBLIC SECTION.
     INTERFACES lif_uri_mapper.
+
     METHODS constructor
       IMPORTING
         uri TYPE string.
-  PROTECTED SECTION.
+
   PRIVATE SECTION.
     DATA uri TYPE string.
-    CONSTANTS:
-      c_fugr_uri_regex  TYPE string VALUE `^/sap/bc/adt/functions/groups/([\w%]+)/(includes|fmodules)/([\w%]+)/source/main`.
+
+    CONSTANTS c_fugr_uri_regex TYPE string
+                               VALUE `^/sap/bc/adt/functions/groups/([\w%]+)/(includes|fmodules)/([\w%]+)/source/main`.
 ENDCLASS.
 
 
@@ -57,12 +59,13 @@ CLASS lcl_prog_uri_mapper DEFINITION.
 
   PUBLIC SECTION.
     INTERFACES lif_uri_mapper.
+
     METHODS constructor
       IMPORTING
         uri TYPE string.
-  PROTECTED SECTION.
+
   PRIVATE SECTION.
     DATA uri TYPE string.
-    CONSTANTS:
-      c_prog_uri_regex  TYPE string VALUE `^/sap/bc/adt/programs/(includes|programs)/([\w%]+)/source/main`.
+
+    CONSTANTS c_prog_uri_regex TYPE string VALUE `^/sap/bc/adt/programs/(includes|programs)/([\w%]+)/source/main`.
 ENDCLASS.

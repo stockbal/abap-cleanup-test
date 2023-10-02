@@ -1,51 +1,48 @@
-"! <p class="shorttext synchronized" lang="en">Determines main program from object</p>
+"! <p class="shorttext synchronized">Determines main program from object</p>
 CLASS zcl_dummy_mainprog_resolver DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.
-    CLASS-METHODS:
-      "! <p class="shorttext synchronized" lang="en">Fills main program if still empty</p>
-      "!
-      "! @parameter element_info | Compilation unit data
-      "! @parameter ignore_filled | if 'X' the main program will always be filled even if not empty. <br/>
-      "!   This is currently only of relevance for method types (OM)
-      resolve_main_prog
-        IMPORTING
-          element_info  TYPE REF TO zif_dummy_ty_global=>ty_abap_element
-          ignore_filled TYPE abap_bool OPTIONAL
-        RAISING
-          zcx_dummy_exception,
+    "! <p class="shorttext synchronized">Fills main program if still empty</p>
+    "!
+    "! @parameter element_info  | Compilation unit data
+    "! @parameter ignore_filled | if 'X' the main program will always be filled even if not empty. <br/>
+    "!   This is currently only of relevance for method types (OM)
+    CLASS-METHODS resolve_main_prog
+      IMPORTING
+        element_info  TYPE REF TO zif_dummy_ty_global=>ty_abap_element
+        ignore_filled TYPE abap_bool OPTIONAL
+      RAISING
+        zcx_dummy_exception.
 
-      "! <p class="shorttext synchronized" lang="en">Resolves main program from ABAP full name</p>
-      get_from_full_name
-        IMPORTING
-          full_name     TYPE string
-        RETURNING
-          VALUE(result) TYPE progname
-        RAISING
-          zcx_dummy_exception.
-  PROTECTED SECTION.
+    "! <p class="shorttext synchronized">Resolves main program from ABAP full name</p>
+    CLASS-METHODS get_from_full_name
+      IMPORTING
+        full_name     TYPE string
+      RETURNING
+        VALUE(result) TYPE progname
+      RAISING
+        zcx_dummy_exception.
+
   PRIVATE SECTION.
-    CLASS-METHODS:
-      get_function_main_prog
-        IMPORTING
-          function_name TYPE rs38l_fnam
-        RETURNING
-          VALUE(result) TYPE progname,
-      resolve_main_prog_om
-        IMPORTING
-          ignore_filled TYPE abap_bool
-          element_info  TYPE REF TO zif_dummy_ty_global=>ty_abap_element
-        RAISING
-          zcx_dummy_exception.
+    CLASS-METHODS get_function_main_prog
+      IMPORTING
+        function_name TYPE rs38l_fnam
+      RETURNING
+        VALUE(result) TYPE progname.
+
+    CLASS-METHODS resolve_main_prog_om
+      IMPORTING
+        ignore_filled TYPE abap_bool
+        element_info  TYPE REF TO zif_dummy_ty_global=>ty_abap_element
+      RAISING
+        zcx_dummy_exception.
 ENDCLASS.
 
 
-
 CLASS zcl_dummy_mainprog_resolver IMPLEMENTATION.
-
   METHOD resolve_main_prog.
     CASE element_info->legacy_type.
 
@@ -70,20 +67,15 @@ CLASS zcl_dummy_mainprog_resolver IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD get_function_main_prog.
     DATA(funcname) = function_name.
     CALL FUNCTION 'FUNCTION_INCLUDE_INFO'
-      IMPORTING
-        pname    = result
-      CHANGING
-        funcname = funcname
-      EXCEPTIONS
-        OTHERS   = 1.
+      IMPORTING  pname    = result
+      CHANGING   funcname = funcname
+      EXCEPTIONS OTHERS   = 1.
     IF sy-subrc <> 0.
     ENDIF.
   ENDMETHOD.
-
 
   METHOD resolve_main_prog_om.
     CHECK ignore_filled = abap_true OR element_info->main_program IS INITIAL.
@@ -98,8 +90,7 @@ CLASS zcl_dummy_mainprog_resolver IMPLEMENTATION.
                                          EXCEPTIONS OTHERS      = 1 ).
     IF sy-subrc <> 0.
       RAISE EXCEPTION TYPE zcx_dummy_exception
-        EXPORTING
-          text = |Type { element_info->encl_object_name } not found!|.
+        EXPORTING text = |Type { element_info->encl_object_name } not found!|.
     ENDIF.
 
     DATA(class_typedescr) = CAST cl_abap_objectdescr( typedescr ).
@@ -115,16 +106,15 @@ CLASS zcl_dummy_mainprog_resolver IMPLEMENTATION.
         IF sy-subrc = 0 AND encl_class_descr->kind = cl_abap_typedescr=>kind_class.
 
           DATA(interfaces) = CAST cl_abap_classdescr( encl_class_descr )->interfaces.
-          IF interfaces IS NOT INITIAL AND
-              line_exists( interfaces[ name = element_info->encl_object_name ] ).
+          IF     interfaces IS NOT INITIAL
+             AND line_exists( interfaces[ name = element_info->encl_object_name ] ).
             element_info->main_program = cl_oo_classname_service=>get_classpool_name(
-              CONV #( CAST cl_abap_objectdescr( encl_class_descr )->get_relative_name( ) ) ).
+                CONV #( CAST cl_abap_objectdescr( encl_class_descr )->get_relative_name( ) ) ).
           ENDIF.
         ENDIF.
       ENDIF.
     ENDIF.
   ENDMETHOD.
-
 
   METHOD get_from_full_name.
     DATA class_type TYPE seoclstype.
@@ -144,12 +134,9 @@ CLASS zcl_dummy_mainprog_resolver IMPLEMENTATION.
 
           " check if type is class or interface
           CALL FUNCTION 'SEO_CLIF_EXISTENCE_CHECK'
-            EXPORTING
-              cifkey  = VALUE seoclskey( clsname = classname )
-            IMPORTING
-              clstype = class_type
-            EXCEPTIONS
-              OTHERS  = 1.
+            EXPORTING  cifkey  = VALUE seoclskey( clsname = classname )
+            IMPORTING  clstype = class_type
+            EXCEPTIONS OTHERS  = 1.
           IF sy-subrc = 0.
             IF class_type = seoc_clstype_class.
               result = cl_oo_classname_service=>get_classpool_name( classname ).
@@ -168,5 +155,4 @@ CLASS zcl_dummy_mainprog_resolver IMPLEMENTATION.
 
     ENDCASE.
   ENDMETHOD.
-
 ENDCLASS.

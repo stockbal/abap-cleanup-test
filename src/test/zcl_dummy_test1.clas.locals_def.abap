@@ -7,7 +7,7 @@ CLASS lcl_local DEFINITION.
     INTERFACES zif_dummy_test1.
 
     ALIASES alias_for_run FOR zif_dummy_test1~run.
-  PROTECTED SECTION.
+
   PRIVATE SECTION.
-    methods local_private.
+    METHODS local_private.
 ENDCLASS.

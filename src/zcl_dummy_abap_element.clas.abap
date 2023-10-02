@@ -1,4 +1,4 @@
-"! <p class="shorttext synchronized" lang="en">Compilation unit</p>
+"! <p class="shorttext synchronized">Compilation unit</p>
 CLASS zcl_dummy_abap_element DEFINITION
   PUBLIC
   FINAL
@@ -8,21 +8,19 @@ CLASS zcl_dummy_abap_element DEFINITION
   PUBLIC SECTION.
     INTERFACES zif_dummy_abap_element.
 
-    METHODS:
-      constructor
-        IMPORTING
-          hierarchy_service TYPE REF TO zif_dummy_call_hierarchy_srv
-          data              TYPE zif_dummy_ty_global=>ty_abap_element
-        RAISING
-          zcx_dummy_exception,
+    METHODS constructor
+      IMPORTING
+        hierarchy_service TYPE REF TO zif_dummy_call_hierarchy_srv
+        !data             TYPE zif_dummy_ty_global=>ty_abap_element
+      RAISING
+        zcx_dummy_exception.
 
-      set_hierarchy_possible
-        IMPORTING
-          value TYPE abap_bool.
-  PROTECTED SECTION.
+    METHODS set_hierarchy_possible
+      IMPORTING
+        !value TYPE abap_bool.
+
   PRIVATE SECTION.
-    ALIASES:
-      element_info FOR zif_dummy_abap_element~element_info.
+    ALIASES element_info FOR zif_dummy_abap_element~element_info.
 
     TYPES:
       BEGIN OF ty_comp_unit_by_line,
@@ -37,28 +35,23 @@ CLASS zcl_dummy_abap_element DEFINITION
 
       ty_ref_stack TYPE STANDARD TABLE OF ty_ref_entry WITH EMPTY KEY.
 
-    DATA:
-      hierarchy_service          TYPE REF TO zif_dummy_call_hierarchy_srv,
-      is_hierarchy_possible      TYPE abap_bool,
-      is_called_units_determined TYPE abap_bool,
-      called_elements            TYPE zif_dummy_abap_element=>ty_ref_tab.
+    DATA hierarchy_service TYPE REF TO zif_dummy_call_hierarchy_srv.
+    DATA is_hierarchy_possible TYPE abap_bool.
+    DATA is_called_units_determined TYPE abap_bool.
+    DATA called_elements TYPE zif_dummy_abap_element=>ty_ref_tab.
 ENDCLASS.
 
 
-
 CLASS zcl_dummy_abap_element IMPLEMENTATION.
-
   METHOD constructor.
     element_info = data.
     me->hierarchy_service = hierarchy_service.
     is_hierarchy_possible = abap_true.
   ENDMETHOD.
 
-
   METHOD set_hierarchy_possible.
     is_hierarchy_possible = value.
   ENDMETHOD.
-
 
   METHOD zif_dummy_abap_element~set_include.
     element_info-include = value.
@@ -81,7 +74,7 @@ CLASS zcl_dummy_abap_element IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD zif_dummy_abap_element~get_call_position_uri.
-**********************************************************************
+    " ---------------------------------------------------------------------
     " 1) direct jump to definition of form
 
 **cl_wb_request=>create_from_encl_name(
@@ -96,7 +89,7 @@ CLASS zcl_dummy_abap_element IMPLEMENTATION.
 **    OTHERS             = 1
 **).
 
-**********************************************************************
+    " ---------------------------------------------------------------------
     IF element_info-include IS INITIAL.
       RETURN.
     ENDIF.
@@ -104,15 +97,15 @@ CLASS zcl_dummy_abap_element IMPLEMENTATION.
     DATA(adt_tools_factory) = cl_adt_tools_core_factory=>get_instance( ).
     DATA(uri_mapper) = adt_tools_factory->get_uri_mapper( ).
 
-    IF element_info-parent_main_program IS INITIAL AND
-        element_info-main_program IS NOT INITIAL AND
-        element_info-source_pos_start IS NOT INITIAL.
+    IF     element_info-parent_main_program IS INITIAL
+       AND element_info-main_program        IS NOT INITIAL
+       AND element_info-source_pos_start    IS NOT INITIAL.
 
       DATA(line) = element_info-source_pos_start-line.
       DATA(col) = element_info-source_pos_start-column.
       DATA(prog) = element_info-main_program.
-    ELSEIF element_info-parent_main_program IS NOT INITIAL AND
-         element_info-call_positions IS NOT INITIAL.
+    ELSEIF     element_info-parent_main_program IS NOT INITIAL
+           AND element_info-call_positions      IS NOT INITIAL.
 
       IF position IS NOT INITIAL.
         line = position-line.
@@ -125,17 +118,16 @@ CLASS zcl_dummy_abap_element IMPLEMENTATION.
       prog = element_info-parent_main_program.
     ENDIF.
 
+    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(mapping_options) = adt_tools_factory->create_mapping_options( ).
 
     TRY.
-        DATA(obj_ref) = uri_mapper->map_include_to_objref(
-          program     = prog
-          include     = element_info-include
-          line        = line
-          line_offset = col ).
+        DATA(obj_ref) = uri_mapper->map_include_to_objref( program     = prog
+                                                           include     = element_info-include
+                                                           line        = line
+                                                           line_offset = col ).
         result = obj_ref->ref_data-uri.
       CATCH cx_adt_uri_mapping.
     ENDTRY.
   ENDMETHOD.
-
 ENDCLASS.

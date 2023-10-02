@@ -1,6 +1,6 @@
 INTERFACE zif_dummy_test1
-  PUBLIC .
+  PUBLIC.
 
   METHODS run.
-  methods test.
+  METHODS test.
 ENDINTERFACE.

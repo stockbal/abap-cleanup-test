@@ -1,28 +1,23 @@
-"! <p class="shorttext synchronized" lang="en">Utility for ADT URIs</p>
+"! <p class="shorttext synchronized">Utility for ADT URIs</p>
 CLASS zcl_dummy_adt_uri_util DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.
-    CLASS-METHODS:
-      "! <p class="shorttext synchronized" lang="en">Retrieves Start position from URI</p>
-      get_uri_source_start_pos
-        IMPORTING
-          uri           TYPE string
-        RETURNING
-          VALUE(result) TYPE zif_dummy_ty_global=>ty_source_position.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+    "! <p class="shorttext synchronized">Retrieves Start position from URI</p>
+    CLASS-METHODS get_uri_source_start_pos
+      IMPORTING
+        uri           TYPE string
+      RETURNING
+        VALUE(result) TYPE zif_dummy_ty_global=>ty_source_position.
 ENDCLASS.
 
 
-
 CLASS zcl_dummy_adt_uri_util IMPLEMENTATION.
-
   METHOD get_uri_source_start_pos.
     FIND REGEX '.*#start=(\d+),?(\d+)?.*' IN uri
-      RESULTS DATA(match).
+         RESULTS DATA(match).
 
     IF lines( match-submatches ) <> 2.
       RETURN.
@@ -43,5 +38,4 @@ CLASS zcl_dummy_adt_uri_util IMPLEMENTATION.
       result-column = uri+offset(length).
     ENDIF.
   ENDMETHOD.
-
 ENDCLASS.

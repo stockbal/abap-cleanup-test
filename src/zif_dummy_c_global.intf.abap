@@ -1,4 +1,4 @@
-"! <p class="shorttext synchronized" lang="en">Global constants for Call Hierarchy</p>
+"! <p class="shorttext synchronized">Global constants for Call Hierarchy</p>
 INTERFACE zif_dummy_c_global
   PUBLIC.
 

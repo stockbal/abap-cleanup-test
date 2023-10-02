@@ -1,6 +1,6 @@
-"! <p class="shorttext synchronized" lang="en">Global Type Definitions</p>
+"! <p class="shorttext synchronized">Global Type Definitions</p>
 INTERFACE zif_dummy_ty_global
-  PUBLIC .
+  PUBLIC.
 
   TYPES:
     ty_visibility        TYPE c LENGTH 15,
@@ -20,8 +20,8 @@ INTERFACE zif_dummy_ty_global
 
     "! Information about function module
     BEGIN OF ty_function_info,
-      name    TYPE tfdir-funcname,
-      group   TYPE rs38l_area,
+      name  TYPE tfdir-funcname,
+      group TYPE rs38l_area,
       include TYPE tfdir-pname,
     END OF ty_function_info,
 

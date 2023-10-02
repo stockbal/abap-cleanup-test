@@ -4,7 +4,6 @@
 
 
 CLASS lcl_uri_mapper_factory IMPLEMENTATION.
-
   METHOD get_uri_mapper.
     IF matches( val = uri regex = `^/sap/bc/adt/programs/.+` ).
       result = NEW lcl_prog_uri_mapper( uri ).
@@ -14,21 +13,19 @@ CLASS lcl_uri_mapper_factory IMPLEMENTATION.
       result = NEW lcl_class_uri_mapper( uri ).
     ENDIF.
   ENDMETHOD.
-
 ENDCLASS.
 
-CLASS lcl_class_uri_mapper IMPLEMENTATION.
 
+CLASS lcl_class_uri_mapper IMPLEMENTATION.
   METHOD constructor.
     me->uri = uri.
   ENDMETHOD.
-
 
   METHOD lif_uri_mapper~map.
     DATA clstype TYPE seoclstype.
 
     FIND REGEX c_class_uri_regex IN uri
-      RESULTS DATA(match).
+         RESULTS DATA(match).
 
     IF match IS INITIAL.
       RETURN.
@@ -42,23 +39,19 @@ CLASS lcl_class_uri_mapper IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    result-uri = uri.
+    result-uri       = uri.
     result-trobjtype = zif_dummy_c_tadir_type=>class.
 
     DATA(classname) = CONV classname(
-      to_upper(
-        cl_http_utility=>unescape_url( |{ uri+classname_group-offset(classname_group-length) }| ) ) ).
+      to_upper( cl_http_utility=>unescape_url( |{ uri+classname_group-offset(classname_group-length) }| ) ) ).
     result-main_prog = cl_oo_classname_service=>get_classpool_name( classname ).
 
     CALL FUNCTION 'SEO_CLIF_EXISTENCE_CHECK'
-      EXPORTING
-        cifkey        = VALUE seoclskey( clsname = classname )
-      IMPORTING
-        clstype       = clstype
-      EXCEPTIONS
-        not_specified = 1
-        not_existing  = 2
-        OTHERS        = 3.
+      EXPORTING  cifkey        = VALUE seoclskey( clsname = classname )
+      IMPORTING  clstype       = clstype
+      EXCEPTIONS not_specified = 1
+                 not_existing  = 2
+                 OTHERS        = 3.
     IF sy-subrc <> 0 OR clstype = 1.
       RAISE EXCEPTION TYPE zcx_dummy_exception.
     ENDIF.
@@ -72,15 +65,15 @@ CLASS lcl_class_uri_mapper IMPLEMENTATION.
       TRY.
 
           DATA(include_pos) = clif_pos_converter->get_include_position( uri_src_pos ).
-          result-include = include_pos-include.
+          result-include         = include_pos-include.
           result-source_position = include_pos-source_position.
         CATCH cx_oo_clif_scan_error cx_oo_invalid_source_position INTO DATA(oo_error).
           RAISE EXCEPTION TYPE zcx_dummy_exception
-            EXPORTING
-              previous = oo_error.
+            EXPORTING previous = oo_error.
       ENDTRY.
     ELSEIF partname = 'includes'.
-      DATA(includename) = COND string( WHEN source_part2_group-offset > 0 THEN uri+source_part2_group-offset(source_part2_group-length) ).
+      DATA(includename) = COND string( WHEN source_part2_group-offset > 0
+                                       THEN uri+source_part2_group-offset(source_part2_group-length) ).
       IF includename = 'definitions'.
         result-include = cl_oo_classname_service=>get_ccdef_name( classname ).
       ELSEIF includename = 'implementations'.
@@ -89,22 +82,18 @@ CLASS lcl_class_uri_mapper IMPLEMENTATION.
         result-include = cl_oo_classname_service=>get_ccau_name( classname ).
       ENDIF.
     ENDIF.
-
   ENDMETHOD.
-
-
 ENDCLASS.
 
-CLASS lcl_fugr_uri_mapper IMPLEMENTATION.
 
+CLASS lcl_fugr_uri_mapper IMPLEMENTATION.
   METHOD constructor.
     me->uri = uri.
   ENDMETHOD.
 
-
   METHOD lif_uri_mapper~map.
     FIND REGEX c_fugr_uri_regex IN uri
-        RESULTS DATA(match).
+         RESULTS DATA(match).
 
     IF match IS INITIAL.
       RETURN.
@@ -118,27 +107,25 @@ CLASS lcl_fugr_uri_mapper IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    result-uri = uri.
+    result-uri       = uri.
     result-trobjtype = zif_dummy_c_tadir_type=>function_group.
 
     DATA(group) = cl_http_utility=>unescape_url( to_upper( uri+fugrname_group-offset(fugrname_group-length) ) ).
     result-main_prog = zcl_dummy_func_util=>get_progname_for_group( CONV #( group ) ).
-    result-include = cl_http_utility=>unescape_url( to_upper( uri+sub_name_group-offset(sub_name_group-length) ) ).
+    result-include   = cl_http_utility=>unescape_url( to_upper( uri+sub_name_group-offset(sub_name_group-length) ) ).
 
     DATA(type_name) = uri+type_group-offset(type_group-length).
     IF type_name = 'fmodules'.
       result-include = zcl_dummy_func_util=>get_function_include_by_fname( CONV #( result-include ) ).
     ENDIF.
   ENDMETHOD.
-
 ENDCLASS.
 
-CLASS lcl_prog_uri_mapper IMPLEMENTATION.
 
+CLASS lcl_prog_uri_mapper IMPLEMENTATION.
   METHOD constructor.
     me->uri = uri.
   ENDMETHOD.
-
 
   METHOD lif_uri_mapper~map.
     FIND REGEX c_prog_uri_regex IN uri
@@ -155,15 +142,14 @@ CLASS lcl_prog_uri_mapper IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    result-uri = uri.
+    result-uri       = uri.
     result-trobjtype = zif_dummy_c_tadir_type=>program.
-    result-main_prog =
-      result-include = cl_http_utility=>unescape_url( to_upper( uri+name_group-offset(name_group-length) ) ).
+    result-include   = cl_http_utility=>unescape_url( to_upper( uri+name_group-offset(name_group-length) ) ).
+    result-main_prog = result-include.
 
     DATA(type_name) = uri+type_group-offset(type_group-length).
     IF type_name = 'includes'.
       " TODO: differentiation necessary ??
     ENDIF.
   ENDMETHOD.
-
 ENDCLASS.

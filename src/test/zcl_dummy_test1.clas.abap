@@ -4,23 +4,24 @@ CLASS zcl_dummy_test1 DEFINITION
 
   PUBLIC SECTION.
     INTERFACES zif_dummy_test1.
+
     METHODS test1.
+
   PROTECTED SECTION.
+
   PRIVATE SECTION.
     ALIASES my_alias FOR zif_dummy_test1~run.
 
     METHODS test2.
     METHODS test3.
     METHODS test4.
-    methods test5.
-    methods test6.
-    methods test7.
+    METHODS test5.
+    METHODS test6.
+    METHODS test7.
 ENDCLASS.
 
 
-
 CLASS zcl_dummy_test1 IMPLEMENTATION.
-
   METHOD test1.
     DATA(local_class) = NEW lcl_local( ).
 
@@ -33,17 +34,13 @@ CLASS zcl_dummy_test1 IMPLEMENTATION.
     DATA(local_class) = NEW lcl_local( ).
     local_class->zif_dummy_test1~run( ).
 
-    cl_wb_object=>create_from_global_type(
-      p_object_type = VALUE #( objtype_tr = 'CLAS' )
-    ).
+    cl_wb_object=>create_from_global_type( p_object_type = VALUE #( objtype_tr = 'CLAS' ) ).
     IF sy-subrc <> 0.
     ENDIF.
   ENDMETHOD.
 
-
-  method zif_dummy_test1~test.
+  METHOD zif_dummy_test1~test.
   ENDMETHOD.
-
 
   METHOD test2.
     my_alias( ).
@@ -56,32 +53,23 @@ CLASS zcl_dummy_test1 IMPLEMENTATION.
     DATA test_class2_ref TYPE REF TO zcl_dummy_test2.
 
     CALL FUNCTION 'REPOSITORY_ENVIRONMENT_ALL'
-      EXPORTING
-        obj_type = 'OM'.
+      EXPORTING obj_type = 'OM'.
 
     intf_ref_with_one_class->execute( ).
 
     test_class2_ref->zif_dummy_test2~execute( ).
   ENDMETHOD.
 
-
   METHOD test4.
     PERFORM save_for_recurrence IN PROGRAM saplseua.
   ENDMETHOD.
 
-
   METHOD test5.
-
   ENDMETHOD.
-
 
   METHOD test6.
-
   ENDMETHOD.
-
 
   METHOD test7.
-
   ENDMETHOD.
-
 ENDCLASS.

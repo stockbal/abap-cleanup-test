@@ -1,67 +1,70 @@
-"! <p class="shorttext synchronized" lang="en">Utility class for ADT</p>
+"! <p class="shorttext synchronized">Utility class for ADT</p>
 CLASS zcl_dummy_adt_util DEFINITION
   PUBLIC
   FINAL
-  CREATE PUBLIC .
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
     TYPES: BEGIN OF ty_adt_obj_ref_info.
              INCLUDE TYPE sadt_object_reference.
     TYPES:   parent_type TYPE string.
-    TYPES: parent_name TYPE string.
+    TYPES:   parent_name TYPE string.
     TYPES: END OF ty_adt_obj_ref_info.
 
-    CLASS-METHODS:
-      "! <p class="shorttext synchronized" lang="en">Retrieve adt object and names</p>
-      get_adt_objects_and_names
-        IMPORTING
-          object_name    TYPE tadir-obj_name
-          object_type    TYPE tadir-object
-          retrieve_parent TYPE abap_bool OPTIONAL
-        EXPORTING
-          adt_uri_mapper TYPE REF TO if_adt_uri_mapper
-          adt_objectref  TYPE REF TO cl_adt_object_reference
-          program        TYPE progname
-          include        TYPE progname
-        RAISING
-          zcx_dummy_exception,
-      "! <p class="shorttext synchronized" lang="en">Retrieve ADT Object Reference for the given name/type</p>
-      get_adt_obj_ref
-        IMPORTING
-          name               TYPE seu_objkey
-          wb_type            TYPE wbobjtype
-          retrieve_parent     TYPE abap_bool OPTIONAL
-          ignore_cache        TYPE abap_bool OPTIONAL
-        RETURNING
-          VALUE(adt_obj_info) TYPE ty_adt_obj_ref_info,
-      "! <p class="shorttext synchronized" lang="en">Retrieve ADT Object Ref for the given name/tadir type</p>
-      get_adt_obj_ref_for_tadir_type
-        IMPORTING
-          tadir_type         TYPE tadir-object
-          name               TYPE sobj_name
-          retrieve_parent     TYPE abap_bool OPTIONAL
-          ignore_cache        TYPE abap_bool OPTIONAL
-        RETURNING
-          VALUE(adt_obj_info) TYPE ty_adt_obj_ref_info,
-      "! <p class="shorttext synchronized" lang="en">Maps wb object to ADT object reference</p>
-      map_tadir_obj_to_object_ref
-        IMPORTING
-          name               TYPE seu_objkey
-          wb_type            TYPE wbobjtype
-          retrieve_parent     TYPE abap_bool OPTIONAL
-        RETURNING
-          VALUE(adt_obj_info) TYPE ty_adt_obj_ref_info,
-      "! <p class="shorttext synchronized" lang="en">Maps the given URI to a workbench object</p>
-      map_uri_to_wb_object
-        IMPORTING
-          VALUE(uri)        TYPE string
-        EXPORTING
-          VALUE(object_name) TYPE string
-          VALUE(object_type) TYPE wbobjtype
-          VALUE(tadir_type)  TYPE trobjtype
-        RAISING
-          cx_adt_uri_mapping.
-  PROTECTED SECTION.
+    "! <p class="shorttext synchronized">Retrieve adt object and names</p>
+    CLASS-METHODS get_adt_objects_and_names
+      IMPORTING
+        object_name     TYPE tadir-obj_name
+        object_type     TYPE tadir-object
+        retrieve_parent TYPE abap_bool OPTIONAL
+      EXPORTING
+        adt_uri_mapper  TYPE REF TO if_adt_uri_mapper
+        adt_objectref   TYPE REF TO cl_adt_object_reference
+        !program        TYPE progname
+        !include        TYPE progname
+      RAISING
+        zcx_dummy_exception.
+
+    "! <p class="shorttext synchronized">Retrieve ADT Object Reference for the given name/type</p>
+    CLASS-METHODS get_adt_obj_ref
+      IMPORTING
+        !name               TYPE seu_objkey
+        wb_type             TYPE wbobjtype
+        retrieve_parent     TYPE abap_bool OPTIONAL
+        ignore_cache        TYPE abap_bool OPTIONAL
+      RETURNING
+        VALUE(adt_obj_info) TYPE ty_adt_obj_ref_info.
+
+    "! <p class="shorttext synchronized">Retrieve ADT Object Ref for the given name/tadir type</p>
+    CLASS-METHODS get_adt_obj_ref_for_tadir_type
+      IMPORTING
+        tadir_type          TYPE tadir-object
+        !name               TYPE sobj_name
+        retrieve_parent     TYPE abap_bool OPTIONAL
+        ignore_cache        TYPE abap_bool OPTIONAL
+      RETURNING
+        VALUE(adt_obj_info) TYPE ty_adt_obj_ref_info.
+
+    "! <p class="shorttext synchronized">Maps wb object to ADT object reference</p>
+    CLASS-METHODS map_tadir_obj_to_object_ref
+      IMPORTING
+        !name               TYPE seu_objkey
+        wb_type             TYPE wbobjtype
+        retrieve_parent     TYPE abap_bool OPTIONAL
+      RETURNING
+        VALUE(adt_obj_info) TYPE ty_adt_obj_ref_info.
+
+    "! <p class="shorttext synchronized">Maps the given URI to a workbench object</p>
+    CLASS-METHODS map_uri_to_wb_object
+      IMPORTING
+        VALUE(uri)         TYPE string
+      EXPORTING
+        VALUE(object_name) TYPE string
+        VALUE(object_type) TYPE wbobjtype
+        VALUE(tadir_type)  TYPE trobjtype
+      RAISING
+        cx_adt_uri_mapping.
+
   PRIVATE SECTION.
     CONSTANTS:
       BEGIN OF c_error_messages,
@@ -85,57 +88,42 @@ CLASS zcl_dummy_adt_util DEFINITION
         adt_object TYPE ty_adt_obj_ref_info,
       END OF ty_adt_object_info_map.
 
-    CLASS-DATA:
-      adt_obj_infos TYPE HASHED TABLE OF ty_adt_object_info_map WITH UNIQUE KEY name type.
+    CLASS-DATA adt_obj_infos TYPE HASHED TABLE OF ty_adt_object_info_map WITH UNIQUE KEY name type.
 
-    CLASS-METHODS:
-      resolve_parent_uri
-        CHANGING
-          adt_obj_info TYPE ty_adt_obj_ref_info,
-      adjust_object_reference
-        CHANGING
-          adt_obj_info TYPE zcl_dummy_adt_util=>ty_adt_obj_ref_info.
+    CLASS-METHODS resolve_parent_uri
+      CHANGING
+        adt_obj_info TYPE ty_adt_obj_ref_info.
+
+    CLASS-METHODS adjust_object_reference
+      CHANGING
+        adt_obj_info TYPE zcl_dummy_adt_util=>ty_adt_obj_ref_info.
 ENDCLASS.
 
 
-
 CLASS zcl_dummy_adt_util IMPLEMENTATION.
-
-
   METHOD get_adt_objects_and_names.
-
     DATA(tr_obj_name) = CONV trobj_name( object_name ).
 
-    cl_wb_object=>create_from_transport_key(
-      EXPORTING
-        p_object    = object_type
-        p_obj_name  = tr_obj_name
-      RECEIVING
-        p_wb_object = DATA(wb_object)
-      EXCEPTIONS
-        OTHERS      = 1 ).
+    cl_wb_object=>create_from_transport_key( EXPORTING  p_object    = object_type
+                                                        p_obj_name  = tr_obj_name
+                                             RECEIVING  p_wb_object = DATA(wb_object)
+                                             EXCEPTIONS OTHERS      = 1 ).
     IF sy-subrc <> 0.
       RAISE EXCEPTION TYPE zcx_dummy_exception
-        EXPORTING
-          text = |Object with name { tr_obj_name } and type { object_type } does not exist|.
+        EXPORTING text = |Object with name { tr_obj_name } and type { object_type } does not exist|.
     ENDIF.
 
     DATA(adt_tools_f) = cl_adt_tools_core_factory=>get_instance( ).
 
-    cl_wb_request=>create_from_object_ref(
-      EXPORTING
-        p_wb_object       = wb_object
-      RECEIVING
-        p_wb_request      = DATA(wb_request)
-      EXCEPTIONS
-        illegal_operation = 1
-        cancelled         = 2
-        OTHERS            = 3 ).
+    cl_wb_request=>create_from_object_ref( EXPORTING  p_wb_object       = wb_object
+                                           RECEIVING  p_wb_request      = DATA(wb_request)
+                                           EXCEPTIONS illegal_operation = 1
+                                                      cancelled         = 2
+                                                      OTHERS            = 3 ).
 
     IF sy-subrc <> 0.
       RAISE EXCEPTION TYPE zcx_dummy_exception
-        EXPORTING
-          text = c_error_messages-wb_request_not_created.
+        EXPORTING text = c_error_messages-wb_request_not_created.
     ENDIF.
 
     DATA(vit_adt_mapper) = adt_tools_f->get_uri_mapper_vit( ).
@@ -149,23 +137,20 @@ CLASS zcl_dummy_adt_util IMPLEMENTATION.
         DATA(mapping_options) = adt_tools_f->create_mapping_options( ).
         mapping_options->set_use_parent( abap_true ).
       ENDIF.
-      adt_objectref = adt_uri_mapper->map_wb_request_to_objref(
-        wb_request      = wb_request
-        mapping_options = mapping_options ).
+      adt_objectref = adt_uri_mapper->map_wb_request_to_objref( wb_request      = wb_request
+                                                                mapping_options = mapping_options ).
 **      eo_adt_objectref = eo_adt_uri_mapper->map_wb_object_to_objref(
 **          wb_object       = lo_wb_object
 **          mapping_options = lo_mapping_options
 **      ).
 
       IF program IS SUPPLIED.
-        adt_uri_mapper->map_objref_to_include(
-          EXPORTING uri     = adt_objectref->ref_data-uri
-          IMPORTING program = program
-                    include = include ).
+        adt_uri_mapper->map_objref_to_include( EXPORTING uri     = adt_objectref->ref_data-uri
+                                               IMPORTING program = program
+                                                         include = include ).
       ENDIF.
     ENDIF.
   ENDMETHOD.
-
 
   METHOD get_adt_obj_ref.
     IF ignore_cache = abap_false.
@@ -173,27 +158,23 @@ CLASS zcl_dummy_adt_util IMPLEMENTATION.
     ENDIF.
 
     IF <adt_obj_info> IS NOT ASSIGNED OR ignore_cache = abap_true.
-      DATA(object_info) = map_tadir_obj_to_object_ref(
-        name            = name
-        wb_type         = wb_type
-        retrieve_parent = retrieve_parent ).
+      DATA(object_info) = map_tadir_obj_to_object_ref( name            = name
+                                                       wb_type         = wb_type
+                                                       retrieve_parent = retrieve_parent ).
       IF object_info IS NOT INITIAL AND object_info-uri IS NOT INITIAL.
         adt_obj_info = object_info.
 
         IF ignore_cache = abap_false.
-          INSERT VALUE #(
-            name       = name
-            type       = wb_type
-            adt_object = object_info ) INTO TABLE adt_obj_infos.
+          INSERT VALUE #( name       = name
+                          type       = wb_type
+                          adt_object = object_info ) INTO TABLE adt_obj_infos.
         ENDIF.
 
       ENDIF.
     ELSE.
       adt_obj_info = <adt_obj_info>-adt_object.
     ENDIF.
-
   ENDMETHOD.
-
 
   METHOD get_adt_obj_ref_for_tadir_type.
     IF ignore_cache = abap_false.
@@ -203,14 +184,12 @@ CLASS zcl_dummy_adt_util IMPLEMENTATION.
     IF <adt_object_info> IS NOT ASSIGNED OR ignore_cache = abap_true.
 
       TRY.
-          get_adt_objects_and_names(
-            EXPORTING
-              object_name        = name
-              object_type        = tadir_type
-              retrieve_parent = retrieve_parent
-            IMPORTING
-              adt_objectref  = DATA(adt_objectref)
-              adt_uri_mapper = DATA(uri_mapper) ).
+          get_adt_objects_and_names( EXPORTING object_name     = name
+                                               object_type     = tadir_type
+                                               retrieve_parent = retrieve_parent
+                                     IMPORTING adt_objectref   = DATA(adt_objectref)
+                                     " TODO: variable is assigned but never used (ABAP cleaner)
+                                               adt_uri_mapper  = DATA(uri_mapper) ).
           IF adt_objectref->ref_data-uri IS INITIAL.
             RETURN.
           ENDIF.
@@ -223,31 +202,26 @@ CLASS zcl_dummy_adt_util IMPLEMENTATION.
       ENDTRY.
 
       IF ignore_cache = abap_false.
-        INSERT VALUE #(
-          name       = name
-          type       = tadir_type
-          adt_object = adt_obj_info ) INTO TABLE adt_obj_infos.
+        INSERT VALUE #( name       = name
+                        type       = tadir_type
+                        adt_object = adt_obj_info ) INTO TABLE adt_obj_infos.
       ENDIF.
     ELSE.
       adt_obj_info = <adt_object_info>-adt_object.
     ENDIF.
-
   ENDMETHOD.
-
 
   METHOD map_tadir_obj_to_object_ref.
     TRY.
-        cl_wb_object=>create_from_global_type(
-          EXPORTING
-            p_object_type             = wb_type
-            p_object_key              = name
-          RECEIVING
-            p_wb_object               = DATA(wb_object)
-          EXCEPTIONS
-            objecttype_not_existing   = 1
-            input_data_not_sufficient = 2
-            OTHERS                    = 3 ).
-        CHECK sy-subrc = 0.
+        cl_wb_object=>create_from_global_type( EXPORTING  p_object_type             = wb_type
+                                                          p_object_key              = name
+                                               RECEIVING  p_wb_object               = DATA(wb_object)
+                                               EXCEPTIONS objecttype_not_existing   = 1
+                                                          input_data_not_sufficient = 2
+                                                          OTHERS                    = 3 ).
+        IF sy-subrc <> 0.
+          RETURN.
+        ENDIF.
         DATA(adt_tools_core_f) = cl_adt_tools_core_factory=>get_instance( ).
         DATA(uri_mapper) = adt_tools_core_f->get_uri_mapper( ).
 
@@ -256,10 +230,11 @@ CLASS zcl_dummy_adt_util IMPLEMENTATION.
           mapping_options->set_use_parent( abap_true ).
         ENDIF.
 
-        DATA(adt_obj_ref) = uri_mapper->map_wb_object_to_objref(
-          wb_object       = wb_object
-          mapping_options = mapping_options ).
-        CHECK adt_obj_ref IS BOUND.
+        DATA(adt_obj_ref) = uri_mapper->map_wb_object_to_objref( wb_object       = wb_object
+                                                                 mapping_options = mapping_options ).
+        IF adt_obj_ref IS NOT BOUND.
+          RETURN.
+        ENDIF.
         adt_obj_info = CORRESPONDING #( adt_obj_ref->ref_data ).
 
         adjust_object_reference( CHANGING adt_obj_info = adt_obj_info ).
@@ -272,9 +247,8 @@ CLASS zcl_dummy_adt_util IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD map_uri_to_wb_object.
-    DATA: uris TYPE TABLE OF string.
+    DATA uris TYPE TABLE OF string.
 
     CHECK uri IS NOT INITIAL.
 
@@ -302,33 +276,28 @@ CLASS zcl_dummy_adt_util IMPLEMENTATION.
         tadir_type = c_adt_types-function_module.
       ENDIF.
     ENDIF.
-
   ENDMETHOD.
 
-
   METHOD resolve_parent_uri.
-    map_uri_to_wb_object(
-      EXPORTING uri         = adt_obj_info-parent_uri
-      IMPORTING object_name = DATA(parent_name)
-                object_type = DATA(parent_type) ).
+    map_uri_to_wb_object( EXPORTING uri         = adt_obj_info-parent_uri
+                          IMPORTING object_name = DATA(parent_name)
+                                    object_type = DATA(parent_type) ).
     adt_obj_info-parent_name = parent_name.
     IF adt_obj_info-parent_name CP 'SAPL*'.
       adt_obj_info-parent_name = adt_obj_info-parent_name+4.
     ENDIF.
     adt_obj_info-parent_type = COND #(
-      WHEN parent_type-subtype_wb IS NOT INITIAL THEN |{ parent_type-objtype_tr }/{ parent_type-subtype_wb }|
-      ELSE                                               parent_type-objtype_tr ).
+      WHEN parent_type-subtype_wb IS NOT INITIAL
+      THEN |{ parent_type-objtype_tr }/{ parent_type-subtype_wb }|
+      ELSE parent_type-objtype_tr ).
   ENDMETHOD.
 
-
   METHOD adjust_object_reference.
-    IF adt_obj_info-type CP 'FUGR*' AND
-       adt_obj_info-name CP 'SAPL*'.
+    IF     adt_obj_info-type CP 'FUGR*'
+       AND adt_obj_info-name CP 'SAPL*'.
 
       adt_obj_info-name = adt_obj_info-name+4.
       CLEAR adt_obj_info-parent_uri.
     ENDIF.
   ENDMETHOD.
-
-
 ENDCLASS.

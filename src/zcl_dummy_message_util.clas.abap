@@ -1,26 +1,20 @@
-"! <p class="shorttext synchronized" lang="en">Message Utility</p>
+"! <p class="shorttext synchronized">Message Utility</p>
 CLASS zcl_dummy_message_util DEFINITION
   PUBLIC
   FINAL
   CREATE PRIVATE.
 
   PUBLIC SECTION.
-    CLASS-METHODS:
-      "! <p class="shorttext synchronized" lang="en">Splits text into sy-msg variables</p>
-      split_string_to_symsg
-        IMPORTING
-          text TYPE string.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+    "! <p class="shorttext synchronized">Splits text into sy-msg variables</p>
+    CLASS-METHODS split_string_to_symsg
+      IMPORTING
+        !text TYPE string.
 ENDCLASS.
 
 
-
 CLASS zcl_dummy_message_util IMPLEMENTATION.
-
   METHOD split_string_to_symsg.
-
-    DATA: offset TYPE i.
+    DATA offset TYPE i.
 
     DATA(rest_text) = text.
 
@@ -42,7 +36,7 @@ CLASS zcl_dummy_message_util IMPLEMENTATION.
       ENDIF.
     ENDIF.
 
+    " TODO: variable is assigned but never used; add pragma ##NEEDED (ABAP cleaner)
     MESSAGE e001(00) WITH msgv1 msgv2 msgv3 msgv4 INTO DATA(msg).
   ENDMETHOD.
-
 ENDCLASS.
