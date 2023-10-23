@@ -20,6 +20,7 @@ ENDCLASS.
 
 CLASS zcx_dummy_not_exists IMPLEMENTATION.
   METHOD constructor ##ADT_SUPPRESS_GENERATION.
-    super->constructor( previous = previous text = text ).
+    super->constructor( previous = previous
+                        text     = text ).
   ENDMETHOD.
 ENDCLASS.

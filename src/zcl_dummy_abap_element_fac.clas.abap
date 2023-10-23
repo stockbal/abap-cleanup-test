@@ -54,7 +54,9 @@ CLASS zcl_dummy_abap_element_fac IMPLEMENTATION.
       IF second_ref_entry-tag = cl_abap_compiler=>tag_type.
         elem_info-legacy_type = swbm_c_type_prg_class_method.
 
-        DATA(encl_class) = translate( val = CONV seoclsname( first_ref_entry-name ) from = '=' to = '' ).
+        DATA(encl_class) = translate( val  = CONV seoclsname( first_ref_entry-name )
+                                      from = '='
+                                      to   = '' ).
         elem_info-encl_obj_display_name = |{ encl_class }=>{ second_ref_entry-name }|.
       ELSE.
         elem_info-legacy_type           = swbm_c_type_prg_subroutine.

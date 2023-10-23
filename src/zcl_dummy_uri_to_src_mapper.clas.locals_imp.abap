@@ -5,11 +5,14 @@
 
 CLASS lcl_uri_mapper_factory IMPLEMENTATION.
   METHOD get_uri_mapper.
-    IF matches( val = uri regex = `^/sap/bc/adt/programs/.+` ).
+    IF matches( val   = uri
+                regex = `^/sap/bc/adt/programs/.+` ).
       result = NEW lcl_prog_uri_mapper( uri ).
-    ELSEIF matches( val = uri regex = `^/sap/bc/adt/functions/groups/.+` ).
+    ELSEIF matches( val   = uri
+                    regex = `^/sap/bc/adt/functions/groups/.+` ).
       result = NEW lcl_fugr_uri_mapper( uri ).
-    ELSEIF matches( val = uri regex = `^/sap/bc/adt/oo/classes/.+` ).
+    ELSEIF matches( val   = uri
+                    regex = `^/sap/bc/adt/oo/classes/.+` ).
       result = NEW lcl_class_uri_mapper( uri ).
     ENDIF.
   ENDMETHOD.
@@ -60,7 +63,8 @@ CLASS lcl_class_uri_mapper IMPLEMENTATION.
     IF partname = 'source/main'.
       " map position to correct include
       DATA(clif_source) = cl_oo_factory=>create_instance( )->create_clif_source( clif_name = classname ).
-      DATA(clif_pos_converter) = cl_oo_source_pos_converter=>create( clif_key = VALUE #( clsname = classname ) source = clif_source ).
+      DATA(clif_pos_converter) = cl_oo_source_pos_converter=>create( clif_key = VALUE #( clsname = classname )
+                                                                     source   = clif_source ).
       DATA(uri_src_pos) = zcl_dummy_adt_uri_util=>get_uri_source_start_pos( uri ).
       TRY.
 

@@ -154,7 +154,8 @@ CLASS zcl_dummy_adt_util IMPLEMENTATION.
 
   METHOD get_adt_obj_ref.
     IF ignore_cache = abap_false.
-      ASSIGN adt_obj_infos[ name = name type = wb_type ] TO FIELD-SYMBOL(<adt_obj_info>).
+      ASSIGN adt_obj_infos[ name = name
+                            type = wb_type ] TO FIELD-SYMBOL(<adt_obj_info>).
     ENDIF.
 
     IF <adt_obj_info> IS NOT ASSIGNED OR ignore_cache = abap_true.
@@ -178,7 +179,8 @@ CLASS zcl_dummy_adt_util IMPLEMENTATION.
 
   METHOD get_adt_obj_ref_for_tadir_type.
     IF ignore_cache = abap_false.
-      ASSIGN adt_obj_infos[ name = name type = tadir_type ] TO FIELD-SYMBOL(<adt_object_info>).
+      ASSIGN adt_obj_infos[ name = name
+                            type = tadir_type ] TO FIELD-SYMBOL(<adt_object_info>).
     ENDIF.
 
     IF <adt_object_info> IS NOT ASSIGNED OR ignore_cache = abap_true.

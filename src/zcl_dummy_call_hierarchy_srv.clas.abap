@@ -131,7 +131,8 @@ CLASS zcl_dummy_call_hierarchy_srv IMPLEMENTATION.
     DATA(direct_refs) = get_direct_references( ).
 
     LOOP AT direct_refs ASSIGNING FIELD-SYMBOL(<direct_ref>) GROUP BY <direct_ref>-full_name.
-      DATA(direct_refs_for_fullname) = VALUE scr_refs( FOR <ref> IN GROUP <direct_ref> ( <ref> ) ).
+      DATA(direct_refs_for_fullname) = VALUE scr_refs( FOR <ref> IN GROUP <direct_ref>
+                                                       ( <ref> ) ).
       DATA(call_positions) = get_call_positions( direct_refs_for_fullname ).
       DATA(first_call_pos) = call_positions[ 1 ].
 
@@ -187,7 +188,8 @@ CLASS zcl_dummy_call_hierarchy_srv IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_direct_references.
-    result = compiler->get_direct_references( full_names = VALUE #( FOR <ref> IN refs_for_range ( <ref>-full_name ) )
+    result = compiler->get_direct_references( full_names = VALUE #( FOR <ref> IN refs_for_range
+                                                                    ( <ref>-full_name ) )
                                               start_line = abap_element_info-source_pos_start-line + 1
                                               end_line   = abap_element_info-source_pos_end-line ).
 
@@ -207,12 +209,14 @@ CLASS zcl_dummy_call_hierarchy_srv IMPLEMENTATION.
           CONTINUE.
       ENDTRY.
 
-      result = VALUE #( BASE result ( <ref> ) ).
+      result = VALUE #( BASE result
+                        ( <ref> ) ).
     ENDLOOP.
   ENDMETHOD.
 
   METHOD get_call_positions.
-    result = VALUE #( FOR <ref> IN refs ( line = <ref>-line column = <ref>-column ) ).
+    result = VALUE #( FOR <ref> IN refs
+                      ( line = <ref>-line column = <ref>-column ) ).
   ENDMETHOD.
 
   METHOD fill_legacy_type.
@@ -236,7 +240,9 @@ CLASS zcl_dummy_call_hierarchy_srv IMPLEMENTATION.
       IF second_ref_entry-tag = cl_abap_compiler=>tag_type.
         abap_element_info-legacy_type = swbm_c_type_prg_class_method.
 
-        DATA(encl_class) = translate( val = CONV seoclsname( first_ref_entry-name ) from = '=' to = '' ).
+        DATA(encl_class) = translate( val  = CONV seoclsname( first_ref_entry-name )
+                                      from = '='
+                                      to   = '' ).
         abap_element_info-encl_obj_display_name = |{ encl_class }=>{ second_ref_entry-name }|.
       ELSE.
         abap_element_info-legacy_type           = swbm_c_type_prg_subroutine.

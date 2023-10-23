@@ -37,7 +37,8 @@ CLASS ltcl_unit IMPLEMENTATION.
       cl_abap_unit_assert=>assert_not_bound( error ).
     ENDIF.
 
-    cl_abap_unit_assert=>assert_equals( act = props exp = exp_props ).
+    cl_abap_unit_assert=>assert_equals( act = props
+                                        exp = exp_props ).
   ENDMETHOD.
 
   METHOD local_class_glob_intf.

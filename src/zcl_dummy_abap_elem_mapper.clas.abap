@@ -183,13 +183,15 @@ CLASS zcl_dummy_abap_elem_mapper IMPLEMENTATION.
 
     " if alias method is found, the full name needs to be adjusted
     IF method_props-is_alias = abap_true.
-      DATA(comp_separator) = find( val = method_props-alias_for sub = '~' ).
+      DATA(comp_separator) = find( val = method_props-alias_for
+                                   sub = '~' ).
       DATA(after_sep_offset) = comp_separator + 1.
 
       " TODO: variable is assigned but never used (ABAP cleaner)
       fullname_info->get_all_parts( IMPORTING et_parts = DATA(name_parts) ).
 
-      DATA(method_part_offset) = find( val = element_info->full_name sub = '\ME:' ).
+      DATA(method_part_offset) = find( val = element_info->full_name
+                                       sub = '\ME:' ).
       element_info->full_name = element_info->full_name(method_part_offset).
 
       " append alias name parts to full name

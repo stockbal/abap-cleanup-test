@@ -88,7 +88,8 @@ CLASS ltcl_unit IMPLEMENTATION.
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(clif_source) = cl_oo_factory=>create_instance( )->create_clif_source( clif_name = 'ZCL_DUMMY_TEST1' ).
 
-    fragment-start = VALUE #( line = 24 offset = 11 ).
+    fragment-start = VALUE #( line   = 24
+                              offset = 11 ).
     uri_input = cl_oo_adt_uri_builder_class=>create_uri_for_class_include( class_name = 'ZCL_DUMMY_TEST1'
                                                                            fragment   = fragment ).
 
@@ -118,7 +119,8 @@ CLASS ltcl_unit IMPLEMENTATION.
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(clif_source) = cl_oo_factory=>create_instance( )->create_clif_source( clif_name = 'ZCL_DUMMY_TEST1' ).
 
-    fragment-start = VALUE #( line = 32 offset = 28 ).
+    fragment-start = VALUE #( line   = 32
+                              offset = 28 ).
     uri_input = cl_oo_adt_uri_builder_class=>create_uri_for_class_include( class_name = 'ZCL_DUMMY_TEST1'
                                                                            fragment   = fragment ).
 
@@ -149,7 +151,8 @@ CLASS ltcl_unit IMPLEMENTATION.
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(clif_source) = cl_oo_factory=>create_instance( )->create_clif_source( clif_name = 'ZCL_DUMMY_TEST1' ).
 
-    fragment-start = VALUE #( line = 58 offset = 31 ).
+    fragment-start = VALUE #( line   = 58
+                              offset = 31 ).
     uri_input = cl_oo_adt_uri_builder_class=>create_uri_for_class_include( class_name = 'ZCL_DUMMY_TEST1'
                                                                            fragment   = fragment ).
 
@@ -178,7 +181,8 @@ CLASS ltcl_unit IMPLEMENTATION.
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(clif_source) = cl_oo_factory=>create_instance( )->create_clif_source( clif_name = 'ZCL_DUMMY_TEST1' ).
 
-    fragment-start = VALUE #( line = 62 offset = 34 ).
+    fragment-start = VALUE #( line   = 62
+                              offset = 34 ).
     uri_input = cl_oo_adt_uri_builder_class=>create_uri_for_class_include( class_name = 'ZCL_DUMMY_TEST1'
                                                                            fragment   = fragment ).
 
@@ -195,7 +199,8 @@ CLASS ltcl_unit IMPLEMENTATION.
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(clif_source) = cl_oo_factory=>create_instance( )->create_clif_source( clif_name = 'ZCL_DUMMY_TEST1' ).
 
-    fragment-start = VALUE #( line = 64 offset = 41 ).
+    fragment-start = VALUE #( line   = 64
+                              offset = 41 ).
     uri_input = cl_oo_adt_uri_builder_class=>create_uri_for_class_include( class_name = 'ZCL_DUMMY_TEST1'
                                                                            fragment   = fragment ).
 
@@ -212,7 +217,8 @@ CLASS ltcl_unit IMPLEMENTATION.
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(clif_source) = cl_oo_factory=>create_instance( )->create_clif_source( clif_name = 'ZCL_DUMMY_TEST1' ).
 
-    fragment-start = VALUE #( line = 69 offset = 25 ).
+    fragment-start = VALUE #( line   = 69
+                              offset = 25 ).
     uri_input = cl_oo_adt_uri_builder_class=>create_uri_for_class_include( class_name = 'ZCL_DUMMY_TEST1'
                                                                            fragment   = fragment ).
 
@@ -230,7 +236,8 @@ CLASS ltcl_unit IMPLEMENTATION.
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(clif_source) = cl_oo_factory=>create_instance( )->create_clif_source( clif_name = classname ).
 
-    fragment-start = VALUE #( line = 27 offset = 25 ).
+    fragment-start = VALUE #( line   = 27
+                              offset = 25 ).
     uri_input = cl_oo_adt_uri_builder_class=>create_uri_for_class_include( class_name = classname
                                                                            fragment   = fragment ).
 
@@ -248,7 +255,8 @@ CLASS ltcl_unit IMPLEMENTATION.
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(clif_source) = cl_oo_factory=>create_instance( )->create_clif_source( clif_name = 'ZCL_DUMMY_TEST3' ).
 
-    fragment-start = VALUE #( line = 9 offset = 32 ).
+    fragment-start = VALUE #( line   = 9
+                              offset = 32 ).
     uri_input = cl_oo_adt_uri_builder_class=>create_uri_for_class_include( class_name = 'ZCL_DUMMY_TEST3'
                                                                            fragment   = fragment ).
 
