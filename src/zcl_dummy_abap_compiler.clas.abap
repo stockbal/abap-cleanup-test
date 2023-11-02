@@ -5,6 +5,7 @@ CLASS zcl_dummy_abap_compiler DEFINITION
 
   PUBLIC SECTION.
     INTERFACES zif_dummy_abap_compiler.
+    INTERFACES zif_dummy.
 
     "! <p class="shorttext synchronized">Retrieves compiler instance by main program name</p>
     CLASS-METHODS get
