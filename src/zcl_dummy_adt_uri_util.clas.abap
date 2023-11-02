@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Utility for ADT URIs</p>
 CLASS zcl_dummy_adt_uri_util DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.

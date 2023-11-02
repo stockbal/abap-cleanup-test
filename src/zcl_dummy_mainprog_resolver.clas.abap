@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Determines main program from object</p>
 CLASS zcl_dummy_mainprog_resolver DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.

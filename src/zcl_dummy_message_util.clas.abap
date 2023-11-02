@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Message Utility</p>
 CLASS zcl_dummy_message_util DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PRIVATE.
 
   PUBLIC SECTION.

@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Mapper for ABAP Elements</p>
 CLASS zcl_dummy_abap_elem_mapper DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PRIVATE.
 
   PUBLIC SECTION.

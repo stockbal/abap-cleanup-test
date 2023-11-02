@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Reads descriptions for elements</p>
 CLASS zcl_dummy_elem_descr_reader DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.

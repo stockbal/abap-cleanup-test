@@ -1,7 +1,6 @@
 CLASS zcx_dummy_nc_exception DEFINITION
   PUBLIC
-  INHERITING FROM cx_no_check
-  FINAL
+  INHERITING FROM cx_no_check FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.

@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Maps URI to program/include</p>
 CLASS zcl_dummy_uri_to_src_mapper DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.

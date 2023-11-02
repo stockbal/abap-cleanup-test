@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Compilation unit</p>
 CLASS zcl_dummy_abap_element DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PRIVATE
   GLOBAL FRIENDS zcl_dummy_abap_element_fac.
 

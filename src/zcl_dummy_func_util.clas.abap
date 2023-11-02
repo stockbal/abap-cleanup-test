@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Util for function modules</p>
 CLASS zcl_dummy_func_util DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.
@@ -59,7 +58,7 @@ CLASS zcl_dummy_func_util IMPLEMENTATION.
 
   METHOD get_function_module_info.
     result-name = function_module.
-    TRANSLATE result-name TO UPPER CASE.
+    result-name = to_upper( result-name ).
 
     CALL FUNCTION 'FUNCTION_EXISTS'
       EXPORTING  funcname           = result-name
@@ -76,7 +75,7 @@ CLASS zcl_dummy_func_util IMPLEMENTATION.
 
   METHOD get_func_module_by_include.
     result-include = include.
-    TRANSLATE result-include TO UPPER CASE.
+    result-include = to_upper( result-include ).
 
     CALL FUNCTION 'FUNCTION_INCLUDE_INFO'
       CHANGING   funcname            = result-name

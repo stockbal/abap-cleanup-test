@@ -1,8 +1,7 @@
 CLASS zcl_dummy_test3 DEFINITION
   PUBLIC
-  ABSTRACT
-  CREATE PRIVATE
-  INHERITING FROM zcl_dummy_test1.
+  INHERITING FROM zcl_dummy_test1 ABSTRACT
+  CREATE PRIVATE.
 
   PUBLIC SECTION.
     CLASS-METHODS class_constructor.

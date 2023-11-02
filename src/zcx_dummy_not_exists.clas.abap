@@ -1,8 +1,7 @@
 "! <p class="shorttext synchronized">Object does not exist error</p>
 CLASS zcx_dummy_not_exists DEFINITION
   PUBLIC
-  INHERITING FROM zcx_dummy_exception
-  FINAL
+  INHERITING FROM zcx_dummy_exception FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.

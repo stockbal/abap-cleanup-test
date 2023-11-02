@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Call Hierarchy Service</p>
 CLASS zcl_dummy_call_hierarchy_srv DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PRIVATE
   GLOBAL FRIENDS zcl_dummy_call_hierarchy.
 

@@ -1,6 +1,5 @@
 CLASS zcl_dummy_fullname_util DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.

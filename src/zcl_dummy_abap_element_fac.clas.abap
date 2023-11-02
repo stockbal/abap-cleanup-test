@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Factory for creating ABAP element's</p>
 CLASS zcl_dummy_abap_element_fac DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PRIVATE.
 
   PUBLIC SECTION.

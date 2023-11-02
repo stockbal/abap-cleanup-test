@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Reads method information</p>
 CLASS zcl_dummy_method_info_reader DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.

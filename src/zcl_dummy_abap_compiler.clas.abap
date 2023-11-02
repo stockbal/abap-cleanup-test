@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Wrapper around ABAP compiler</p>
 CLASS zcl_dummy_abap_compiler DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PRIVATE.
 
   PUBLIC SECTION.

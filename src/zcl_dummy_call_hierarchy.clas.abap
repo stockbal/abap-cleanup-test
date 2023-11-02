@@ -1,7 +1,6 @@
 "! <p class="shorttext synchronized">Call hierarchy for method/form/function</p>
 CLASS zcl_dummy_call_hierarchy DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.
